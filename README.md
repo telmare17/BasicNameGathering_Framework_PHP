@@ -1,2 +1,4 @@
 # BasicNameGathering_Framework_PHP
 Basic Name Gathering é um sistema em PHP baseado no padrão MVC, com áreas de administrador e usuário. Permite a gestão de nomes através de CRUD, autenticação e controle de acessos, garantindo organização e segurança dos dados.
+
+![PHP](https://img.shields.io/badge/php-%23777BB4.svg?style=for-the-badge&logo=php&logoColor=white) ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white) ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white) ![Bootstrap](https://img.shields.io/badge/bootstrap-%238511FA.svg?style=for-the-badge&logo=bootstrap&logoColor=white)
