@@ -12,13 +12,13 @@ class Main extends BaseController
         $this->view('layouts/html_header');
 
         // login
-        // $this->view('login_frm');
+        //$this->view('login_frm');
 
         // esqueci-me da password (formulário)
-        // $this->view('reset_password_frm');
+        //$this->view('reset_password_frm');
 
         // esqueci-me da password - email enviado
-        // $this->view('reset_password_email_sent');
+        //$this->view('reset_password_email_sent');
 
         // esqueci-me da password - introduza o código
         // $this->view('reset_password_insert_code');
@@ -33,7 +33,7 @@ class Main extends BaseController
         $this->view('navbar');
         
         // homepage
-        // $this->view('homepage');
+        $this->view('homepage');
         
         // meus clientes
         // $this->view('agent_clients');
