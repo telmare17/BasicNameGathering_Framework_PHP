@@ -16,8 +16,12 @@ class Main extends BaseController
             return;
         }
 
+        $data['user'] = $_SESSION['user'];
+
         $this->view('layouts/html_header');
-        echo '<h3 class="text-white text-center">Olá Mundo!</h3>';
+        $this->view('navbar', $data);
+        $this->view('homepage', $data);
+        $this->view('footer');
         $this->view('layouts/html_footer');
     }
 
@@ -119,6 +123,15 @@ class Main extends BaseController
         // update the last login
         $results = $model->set_user_last_login($_SESSION['user']->id);
         // go to main page
+        $this->index();
+    }
+
+    public function logout()
+    {
+        // clear user from session
+        unset($_SESSION['user']);
+
+        // go to index (login form)
         $this->index();
     }
     
