@@ -104,7 +104,7 @@ class Main extends BaseController
         if(!$result['status']){
 
             // invalid login
-            $_SESSION['server_error'] = 'Login inválido';
+            $_SESSION['server_error'] = 'Login inválido.';
             $this->login_frm();
             return;
 
@@ -112,11 +112,14 @@ class Main extends BaseController
 
         // load user information to the session
         $results = $model->get_user_data($username);
-        printData($results);
+        
+        //add the user to session
+        $_SESSION['user'] = $results['data'];
 
         // update the last login
-
+        $results = $model->set_user_last_login($_SESSION['user']->id);
         // go to main page
+        $this->index();
     }
     
 } 

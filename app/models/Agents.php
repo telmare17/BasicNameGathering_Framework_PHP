@@ -64,4 +64,19 @@ class Agents extends BaseModel
         ];
     }
 
+    public function set_user_last_login($id)
+    {
+        // updates the user's last login
+        $params = [
+            ':id' => $id
+        ];
+        $this->db_connect();
+        $results = $this->non_query(
+            "UPDATE agents SET " . 
+            "last_login = NOW() " . 
+            "WHERE id = :id"
+        ,$params);
+        return $results;
+    }
+
 }
