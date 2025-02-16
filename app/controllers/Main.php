@@ -135,6 +135,12 @@ class Main extends BaseController
     public function logout()
     {
 
+       // disable direct access to logout
+       if(!check_session()){
+        $this->index();
+        return;
+    } 
+
         // logger
         logger($_SESSION['user']->name . ' - fez logout');
 
@@ -148,9 +154,7 @@ class Main extends BaseController
 } 
 
 /*
-
 admin@bng.com - Aa123456
 agente1@bng.com - Aa123456
 agente2@bng.com - Aa123456
-
 */
