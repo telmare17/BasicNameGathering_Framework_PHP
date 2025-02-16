@@ -115,4 +115,34 @@ class Agents extends BaseModel
             'data' => $results->results
         ];
     }
+
+    // =======================================================
+    
+    public function check_if_client_exists($post_data)
+    {
+        // check if there is already a client with the same name
+        $params = [
+            ':id_agent' => $_SESSION['user']->id,
+            ':client_name' => $post_data['text_name']
+        ];
+
+        $this->db_connect();
+        $results = $this->query(
+            "SELECT id FROM persons " . 
+            "WHERE AES_ENCRYPT(:client_name, '" . MYSQL_AES_KEY . "') = name " . 
+            "AND id_agent = :id_agent",
+            $params
+        );
+
+        if($results->affected_rows == 0){
+            return [
+                'status' => false
+            ];
+        } else {
+            return [
+                'status' => true
+            ];
+        }
+    }
 }
+
