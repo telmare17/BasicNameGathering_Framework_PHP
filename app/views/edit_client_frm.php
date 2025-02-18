@@ -12,7 +12,7 @@
 
                         <form action="?ct=agent&mt=edit_client_submit" method="post">
 
-                        <input type="hidden" name="id_client" value="<?= aes_encrypt($client->id) ?>">
+                            <input type="hidden" name="id_client" value="<?= aes_encrypt($client->id) ?>">
 
                             <div class="mb-3">
                                 <label for="text_name" class="form-label">Nome</label>
@@ -52,20 +52,27 @@
                                 <label for="text_interests" class="form-label">Interesses<span class="ms-4"><small>(Palavras separadas por virgulas)</small></span></label>
                                 <input type="text" class="form-control" name="text_interests" id="text_interests" value="<?= $client->interests ?>">
                             </div>
-                            
+
                             <div class="mb-3 text-center">
                                 <a href="?ct=agent&mt=my_clients" class="btn btn-secondary"><i class="fa-solid fa-xmark me-2"></i>Cancelar</a>
                                 <button type="submit" class="btn btn-secondary"><i class="fa-regular fa-floppy-disk me-2"></i>Atualizar</button>
                             </div>
-                            <?php if(isset($validation_errors)): ?>
-                            <div class="alert alert-danger p-2">
-                                <ul>
-                                    <?php foreach($validation_errors as $error): ?>
-                                        <li><?= $error ?></li>
-                                    <?php endforeach; ?>
-                                </ul>
-                            </div>
+                            <?php if (isset($validation_errors)): ?>
+                                <div class="alert alert-danger p-2">
+                                    <ul>
+                                        <?php foreach ($validation_errors as $error): ?>
+                                            <li><?= $error ?></li>
+                                        <?php endforeach; ?>
+                                    </ul>
+                                </div>
                             <?php endif; ?>
+
+                            <?php if (isset($server_error)): ?>
+                                <div class="alert alert-danger p-2 text-center">
+                                    <?= $server_error ?>
+                                </div>
+                            <?php endif; ?>
+
                         </form>
                     </div>
                 </div>

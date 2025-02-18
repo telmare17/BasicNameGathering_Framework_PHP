@@ -117,7 +117,7 @@ class Agents extends BaseModel
     }
 
     // =======================================================
-    
+
     public function check_if_client_exists($post_data)
     {
         // check if there is already a client with the same name
@@ -128,13 +128,13 @@ class Agents extends BaseModel
 
         $this->db_connect();
         $results = $this->query(
-            "SELECT id FROM persons " . 
-            "WHERE AES_ENCRYPT(:client_name, '" . MYSQL_AES_KEY . "') = name " . 
-            "AND id_agent = :id_agent",
+            "SELECT id FROM persons " .
+                "WHERE AES_ENCRYPT(:client_name, '" . MYSQL_AES_KEY . "') = name " .
+                "AND id_agent = :id_agent",
             $params
         );
 
-        if($results->affected_rows == 0){
+        if ($results->affected_rows == 0) {
             return [
                 'status' => false
             ];
@@ -145,7 +145,7 @@ class Agents extends BaseModel
         }
     }
 
-    
+
     // =======================================================
     public function add_new_client_to_database($post_data)
     {
@@ -183,7 +183,7 @@ class Agents extends BaseModel
     }
 
     // =======================================================
-    
+
     public function get_client_data($id_client)
     {
         // get client data by id
@@ -193,19 +193,20 @@ class Agents extends BaseModel
 
         $this->db_connect();
         $results = $this->query(
-            "SELECT " . 
-            "id, " . 
-            "AES_DECRYPT(name, '" . MYSQL_AES_KEY . "') name, " . 
-            "gender, " . 
-            "birthdate, " . 
-            "AES_DECRYPT(email, '" . MYSQL_AES_KEY . "') email, " . 
-            "AES_DECRYPT(phone, '" . MYSQL_AES_KEY . "') phone, " . 
-            "interests " . 
-            "FROM persons " . 
-            "WHERE id = :id_client"
-        , $params);
+            "SELECT " .
+                "id, " .
+                "AES_DECRYPT(name, '" . MYSQL_AES_KEY . "') name, " .
+                "gender, " .
+                "birthdate, " .
+                "AES_DECRYPT(email, '" . MYSQL_AES_KEY . "') email, " .
+                "AES_DECRYPT(phone, '" . MYSQL_AES_KEY . "') phone, " .
+                "interests " .
+                "FROM persons " .
+                "WHERE id = :id_client",
+            $params
+        );
 
-        if($results->affected_rows == 0){
+        if ($results->affected_rows == 0) {
             return [
                 'status' => 'error'
             ];
@@ -215,6 +216,73 @@ class Agents extends BaseModel
             'status' => 'success',
             'data' => $results->results[0]
         ];
+    }
+
+    // =======================================================
+    public function check_other_client_with_same_name($id, $name)
+    {
+        // check if exists another agent's client with the same name
+        $params = [
+            ':id' => $id,
+            ':name' => $name,
+            ':id_agent' => $_SESSION['user']->id
+        ];
+        $this->db_connect();
+        $results = $this->query(
+            "SELECT id " .
+                "FROM persons " .
+                "WHERE id <> :id " .
+                "AND id_agent = :id_agent " .
+                "AND AES_ENCRYPT(:name, '" . MYSQL_AES_KEY . "') = name",
+            $params
+        );
+
+        if ($results->affected_rows != 0) {
+            return ['status' => true];
+        } else {
+            return ['status' => false];
+        }
+    }
+
+    // =======================================================
+
+    public function update_client_data($id, $post_data)
+    {
+        // updates the agent's client data in the database
+        $birthdate = new \DateTime($post_data['text_birthdate']);
+        $params = [
+            ':id' => $id,
+            ':name' => $post_data['text_name'],
+            ':gender' => $post_data['radio_gender'],
+            ':birthdate' => $birthdate->format('Y-m-d H:i:s'),
+            ':email' => $post_data['text_email'],
+            ':phone' => $post_data['text_phone'],
+            ':interests' => $post_data['text_interests'],
+        ];
+        $this->db_connect();
+        $this->non_query(
+            "UPDATE persons SET " . 
+            "name = AES_ENCRYPT(:name, '" . MYSQL_AES_KEY . "'), " .
+            "gender = :gender, " . 
+            "birthdate = :birthdate, " . 
+            "email = AES_ENCRYPT(:email, '" . MYSQL_AES_KEY . "'), " .
+            "phone = AES_ENCRYPT(:phone, '" . MYSQL_AES_KEY . "'), " .
+            "interests = :interests, " . 
+            "updated_at = NOW() " . 
+            "WHERE id = :id"
+        , $params);
+    }
+
+    // =======================================================
+    
+    public function delete_client($id_client)
+    {
+        // deletes the client from the database (hard delete)
+        $params = [
+            ':id' => $id_client
+        ];
+        $this->db_connect();
+        $this->non_query("DELETE FROM persons WHERE id = :id", $params);
     }
 }
 
