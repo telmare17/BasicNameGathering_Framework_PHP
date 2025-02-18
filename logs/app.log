@@ -27,3 +27,5 @@
 [2025-02-17T00:18:47.694045+01:00] app_logs.INFO: agente1@bng.com - login com sucesso [] []
 [2025-02-17T00:18:59.771752+01:00] app_logs.INFO: agente1@bng.com - fez logout [] []
 [2025-02-17T00:19:05.257651+01:00] app_logs.INFO: agente1@bng.com - login com sucesso [] []
+[2025-02-18T15:09:26.574603+01:00] app_logs.INFO: agente1@bng.com - login com sucesso [] []
+[2025-02-18T15:27:34.369004+01:00] app_logs.INFO: agente1@bng.com - adicionou um novo cliente: Maria Julia | mjcruz@gmail.com [] []

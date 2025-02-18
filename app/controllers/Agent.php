@@ -138,6 +138,9 @@ class Agent extends BaseController
         // add new client to the database
         $model->add_new_client_to_database($_POST);
 
+        //logger
+        logger(get_active_user_name() . " - adicionou um novo cliente: " . $_POST['text_name'] . ' | ' . $_POST['text_email']);
+
         // return to the main clients page
         $this->my_clients();
     }
@@ -145,12 +148,12 @@ class Agent extends BaseController
     // =======================================================
     public function edit_client($id)
     {
-        echo "editar $id";
+        echo "editar " . aes_decrypt($id);
     }
 
     // =======================================================
     public function delete_client($id)
     {
-        echo "eliminar $id";
+        echo "eliminar " . aes_decrypt($id);
     }
 }
