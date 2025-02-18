@@ -350,4 +350,34 @@ class Agent extends BaseController
         // returns to the agent's main page
         $this->my_clients();
     }
+
+    
+    // =======================================================
+    public function upload_file_frm()
+    {
+        if (!check_session() || $_SESSION['user']->profile != 'agent') {
+            header('Location: index.php');
+        }
+
+        // display the view
+        $data['user'] = $_SESSION['user'];
+
+        // check if there is a server error
+        if (!empty($_SESSION['server_error'])) {
+            $data['server_error'] = $_SESSION['server_error'];
+            unset($_SESSION['server_error']);
+        }
+
+        $this->view('layouts/html_header');
+        $this->view('navbar', $data);
+        $this->view('upload_file_with_clients_frm', $data);
+        $this->view('footer');
+        $this->view('layouts/html_footer');
+    }
+
+    // =======================================================
+    
+    public function upload_file_submit() {
+        die('tratar ficheiro');
+    }
 }
