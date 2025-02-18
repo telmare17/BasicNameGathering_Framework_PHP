@@ -13,7 +13,7 @@ class Agent extends BaseController
         if (!check_session() || $_SESSION['user']->profile != 'agent') {
             header('Location: index.php');
         }
- 
+
         // get all agent clients
         $id_agent = $_SESSION['user']->id;
         $model = new Agents();
@@ -40,13 +40,13 @@ class Agent extends BaseController
         $data['flatpickr'] = true;
 
         // check if there are validation errors
-        if(!empty($_SESSION['validation_errors'])){
+        if (!empty($_SESSION['validation_errors'])) {
             $data['validation_errors'] = $_SESSION['validation_errors'];
             unset($_SESSION['validation_errors']);
         }
 
         // check if there is a server erro
-        if(!empty($_SESSION['server_error'])){
+        if (!empty($_SESSION['server_error'])) {
             $data['server_error'] = $_SESSION['server_error'];
             unset($_SESSION['server_error']);
         }
@@ -78,46 +78,46 @@ class Agent extends BaseController
         }
 
         // gender
-        if(empty($_POST['radio_gender'])){
+        if (empty($_POST['radio_gender'])) {
             $validation_errors[] = "É obrigatório definir o género.";
         }
 
         // text_birthdate
-        if(empty($_POST['text_birthdate'])){
+        if (empty($_POST['text_birthdate'])) {
             $validation_errors[] = "Data de nascimento é obrigatória.";
         } else {
             // check if birthdate is valid and is older than today
             $birthdate = \DateTime::createFromFormat('d-m-Y', $_POST['text_birthdate']);
-            if(!$birthdate) {
+            if (!$birthdate) {
                 $validation_errors[] = "A data de nascimento não está no formato correto.";
             } else {
                 $today = new \DateTime();
-                if($birthdate >= $today){
+                if ($birthdate >= $today) {
                     $validation_errors[] = "A data de nascimento tem que ser anterior ao dia atual.";
                 }
             }
         }
 
         // email
-        if(empty($_POST['text_email'])){
+        if (empty($_POST['text_email'])) {
             $validation_errors[] = "Email é de preenchimento obrigatório.";
         } else {
-            if(!filter_var($_POST['text_email'], FILTER_VALIDATE_EMAIL)){
+            if (!filter_var($_POST['text_email'], FILTER_VALIDATE_EMAIL)) {
                 $validation_errors[] = "Email não é válido.";
             }
         }
 
         // phone
-        if(empty($_POST['text_phone'])){
+        if (empty($_POST['text_phone'])) {
             $validation_errors[] = "Telefone é de preenchimento obrigatório.";
         } else {
-            if(!preg_match("/^9{1}\d{8}$/", $_POST['text_phone'])){
+            if (!preg_match("/^9{1}\d{8}$/", $_POST['text_phone'])) {
                 $validation_errors[] = "O telefone deve começar por 9 e ter 9 algarismos no total.";
             }
         }
 
         // check if there are validation errors to return to the form
-        if(!empty($validation_errors)){
+        if (!empty($validation_errors)) {
             $_SESSION['validation_errors'] = $validation_errors;
             $this->new_client_frm();
             return;
@@ -127,14 +127,14 @@ class Agent extends BaseController
         $model = new Agents();
         $results = $model->check_if_client_exists($_POST);
 
-        if($results['status']){
+        if ($results['status']) {
 
             // a person with the same name exists for this agent. Returns a server error
             $_SESSION['server_error'] = "Já existe um cliente com esse nome.";
             $this->new_client_frm();
             return;
         }
-        
+
         // add new client to the database
         $model->add_new_client_to_database($_POST);
 
@@ -154,7 +154,7 @@ class Agent extends BaseController
 
         // check if the $id is valid
         $id_client = aes_decrypt($id);
-        if(!$id_client){
+        if (!$id_client) {
 
             // id_client is invalid
             header('Location: index.php');
@@ -165,7 +165,7 @@ class Agent extends BaseController
         $results = $model->get_client_data($id_client);
 
         // check if the client data exists
-        if($results['status'] == 'error'){
+        if ($results['status'] == 'error') {
 
             // invalid client data
             header('Location: index.php');
@@ -178,13 +178,13 @@ class Agent extends BaseController
         $data['flatpickr'] = true;
 
         // check if there are validation errors
-        if(!empty($_SESSION['validation_errors'])){
+        if (!empty($_SESSION['validation_errors'])) {
             $data['validation_errors'] = $_SESSION['validation_errors'];
             unset($_SESSION['validation_errors']);
         }
 
         // check if there is a server erro
-        if(!empty($_SESSION['server_error'])){
+        if (!empty($_SESSION['server_error'])) {
             $data['server_error'] = $_SESSION['server_error'];
             unset($_SESSION['server_error']);
         }
@@ -216,55 +216,55 @@ class Agent extends BaseController
         }
 
         // gender
-        if(empty($_POST['radio_gender'])){
+        if (empty($_POST['radio_gender'])) {
             $validation_errors[] = "É obrigatório definir o género.";
         }
 
         // text_birthdate
-        if(empty($_POST['text_birthdate'])){
+        if (empty($_POST['text_birthdate'])) {
             $validation_errors[] = "Data de nascimento é obrigatória.";
         } else {
             // check if birthdate is valid and is older than today
             $birthdate = \DateTime::createFromFormat('d-m-Y', $_POST['text_birthdate']);
-            if(!$birthdate) {
+            if (!$birthdate) {
                 $validation_errors[] = "A data de nascimento não está no formato correto.";
             } else {
                 $today = new \DateTime();
-                if($birthdate >= $today){
+                if ($birthdate >= $today) {
                     $validation_errors[] = "A data de nascimento tem que ser anterior ao dia atual.";
                 }
             }
         }
 
         // email
-        if(empty($_POST['text_email'])){
+        if (empty($_POST['text_email'])) {
             $validation_errors[] = "Email é de preenchimento obrigatório.";
         } else {
-            if(!filter_var($_POST['text_email'], FILTER_VALIDATE_EMAIL)){
+            if (!filter_var($_POST['text_email'], FILTER_VALIDATE_EMAIL)) {
                 $validation_errors[] = "Email não é válido.";
             }
         }
 
         // phone
-        if(empty($_POST['text_phone'])){
+        if (empty($_POST['text_phone'])) {
             $validation_errors[] = "Telefone é de preenchimento obrigatório.";
         } else {
-            if(!preg_match("/^9{1}\d{8}$/", $_POST['text_phone'])){
+            if (!preg_match("/^9{1}\d{8}$/", $_POST['text_phone'])) {
                 $validation_errors[] = "O telefone deve começar por 9 e ter 9 algarismos no total.";
             }
         }
 
         // check if the id_client is present in POST and is valid
-        if(empty($_POST['id_client'])){
+        if (empty($_POST['id_client'])) {
             header('Location: index.php');
         }
         $id_client = aes_decrypt($_POST['id_client']);
-        if(!$id_client){
+        if (!$id_client) {
             header('Location: index.php');
         }
 
         // check if there are validation errors to return to the form
-        if(!empty($validation_errors)){
+        if (!empty($validation_errors)) {
             $_SESSION['validation_errors'] = $validation_errors;
             $this->edit_client(aes_encrypt($id_client));
             return;
@@ -275,7 +275,7 @@ class Agent extends BaseController
         $results = $model->check_other_client_with_same_name($id_client, $_POST['text_name']);
 
         // check if there is...
-        if($results['status']){
+        if ($results['status']) {
             $_SESSION['server_error'] = "Já existe outro cliente com o mesmo nome.";
             $this->edit_client(aes_encrypt($id_client));
             return;
@@ -300,7 +300,7 @@ class Agent extends BaseController
 
         // check if the $id is valid
         $id_client = aes_decrypt($id);
-        if(!$id_client){
+        if (!$id_client) {
 
             // id_client is invalid
             header('Location: index.php');
@@ -310,7 +310,7 @@ class Agent extends BaseController
         $model = new Agents();
         $results = $model->get_client_data($id_client);
 
-        if(empty($results['data'])){
+        if (empty($results['data'])) {
             header('Location: index.php');
         }
 
@@ -334,7 +334,7 @@ class Agent extends BaseController
 
         // check if the $id is valid
         $id_client = aes_decrypt($id);
-        if(!$id_client){
+        if (!$id_client) {
 
             // id_client is invalid
             header('Location: index.php');
@@ -351,7 +351,7 @@ class Agent extends BaseController
         $this->my_clients();
     }
 
-    
+
     // =======================================================
     public function upload_file_frm()
     {
@@ -376,8 +376,53 @@ class Agent extends BaseController
     }
 
     // =======================================================
-    
-    public function upload_file_submit() {
-        die('tratar ficheiro');
+
+    public function upload_file_submit()
+    {
+
+        if (!check_session() || $_SESSION['user']->profile != 'agent') {
+            header('Location: index.php');
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] != 'POST') {
+            header('Location: index.php');
+        }
+
+        // check if there is a uploaded file
+        if (empty($_FILES) || empty($_FILES['clients_file']['name'])) {
+            $_SESSION['server_error'] = "Faça o carregamento de um ficheiro XLSX ou CSV.";
+            $this->upload_file_frm();
+            return;
+        }
+
+        // check if the uploaded file extension is valid
+        $valid_extensions = ['xlsx', 'csv'];
+        $tmp = explode('.', $_FILES['clients_file']['name']);
+        $extension = end($tmp);
+        if (!in_array($extension, $valid_extensions)) {
+            $_SESSION['server_error'] = "O ficheiro deve ser do tipo XLSX ou CSV.";
+            $this->upload_file_frm();
+            return;
+        }
+
+        // check the size of the file: max = 2 MB
+        if ($_FILES['clients_file']['size'] > 2000000) {
+            $_SESSION['server_error'] = "O ficheiro deve ter, no máximo, 2 MB.";
+            $this->upload_file_frm();
+            return;
+        }
+
+        // move file to final destination
+        $file_path = __DIR__ . '/../../uploads/dados_' . time() . '.' . $extension;
+        if (move_uploaded_file($_FILES['clients_file']['tmp_name'], $file_path)) {
+
+            // the file was uploaded correctly.
+            // ready to charge data into the database
+            die('ficheiro carregado com sucesso.');
+        } else {
+            $_SESSION['server_error'] = "Aconteceu um erro inesperado no carregamento do ficheiro.";
+            $this->upload_file_frm();
+            return;
+        }
     }
 }
