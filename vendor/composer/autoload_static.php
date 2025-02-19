@@ -7,11 +7,17 @@ namespace Composer\Autoload;
 class ComposerStaticInit052cf36c8036cc98f48e629ab436a86b
 {
     public static $files = array (
+        '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
+        'db356362850385d08a5381de2638b5fd' => __DIR__ . '/..' . '/mpdf/mpdf/src/functions.php',
         'ff05b2fc531ffef7bf6195ce20dc3dc7' => __DIR__ . '/../..' . '/app/config.php',
         '9403696b7e048f01b3e05e13818a4bf4' => __DIR__ . '/../..' . '/app/helpers/functions.php',
     );
 
     public static $prefixLengthsPsr4 = array (
+        's' => 
+        array (
+            'setasign\\Fpdi\\' => 14,
+        ),
         'b' => 
         array (
             'bng\\System\\' => 11,
@@ -32,8 +38,15 @@ class ComposerStaticInit052cf36c8036cc98f48e629ab436a86b
         ),
         'M' => 
         array (
+            'Mpdf\\PsrLogAwareTrait\\' => 22,
+            'Mpdf\\PsrHttpMessageShim\\' => 24,
+            'Mpdf\\' => 5,
             'Monolog\\' => 8,
             'Matrix\\' => 7,
+        ),
+        'D' => 
+        array (
+            'DeepCopy\\' => 9,
         ),
         'C' => 
         array (
@@ -43,6 +56,10 @@ class ComposerStaticInit052cf36c8036cc98f48e629ab436a86b
     );
 
     public static $prefixDirsPsr4 = array (
+        'setasign\\Fpdi\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/setasign/fpdi/src',
+        ),
         'bng\\System\\' => 
         array (
             0 => __DIR__ . '/../..' . '/app/system',
@@ -80,6 +97,18 @@ class ComposerStaticInit052cf36c8036cc98f48e629ab436a86b
         array (
             0 => __DIR__ . '/..' . '/phpoffice/phpspreadsheet/src/PhpSpreadsheet',
         ),
+        'Mpdf\\PsrLogAwareTrait\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/mpdf/psr-log-aware-trait/src',
+        ),
+        'Mpdf\\PsrHttpMessageShim\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/mpdf/psr-http-message-shim/src',
+        ),
+        'Mpdf\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/mpdf/mpdf/src',
+        ),
         'Monolog\\' => 
         array (
             0 => __DIR__ . '/..' . '/monolog/monolog/src/Monolog',
@@ -87,6 +116,10 @@ class ComposerStaticInit052cf36c8036cc98f48e629ab436a86b
         'Matrix\\' => 
         array (
             0 => __DIR__ . '/..' . '/markbaker/matrix/classes/src',
+        ),
+        'DeepCopy\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy',
         ),
         'Composer\\Pcre\\' => 
         array (
