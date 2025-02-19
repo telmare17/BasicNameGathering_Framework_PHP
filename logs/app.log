@@ -53,3 +53,8 @@
 [2025-02-19T05:41:38.177168+01:00] app_logs.INFO: agente1@bng.com - Eliminado o cliente id: 10 [] []
 [2025-02-19T05:42:07.017949+01:00] app_logs.INFO: agente1@bng.com - Eliminado o cliente id: 9 [] []
 [2025-02-19T05:42:10.635707+01:00] app_logs.INFO: agente1@bng.com - Eliminado o cliente id: 8 [] []
+[2025-02-19T05:58:24.899118+01:00] app_logs.INFO: agente1@bng.com - carregamento de ficheiro efetuado: template.xlsx [] []
+[2025-02-19T05:58:24.905966+01:00] app_logs.INFO: agente1@bng.com - report: {"total":1,"total_carregados":1,"total_nao_carregados":0} [] []
+[2025-02-19T06:05:41.231215+01:00] app_logs.INFO: agente1@bng.com - fez download da lista de clientes para o ficheiro: output_1739941535.xlsx | total: 5 registos. [] []
+[2025-02-19T06:27:34.116118+01:00] app_logs.INFO: agente1@bng.com - password alterada com sucesso no perfil de utilizador. [] []
+[2025-02-19T06:30:43.505724+01:00] app_logs.INFO: agente1@bng.com - password alterada com sucesso no perfil de utilizador. [] []

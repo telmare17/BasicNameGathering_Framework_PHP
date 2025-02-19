@@ -109,7 +109,6 @@ class Agents extends BaseModel
             $params
         );
 
-
         return [
             'status' => 'success',
             'data' => $results->results
@@ -117,7 +116,6 @@ class Agents extends BaseModel
     }
 
     // =======================================================
-
     public function check_if_client_exists($post_data)
     {
         // check if there is already a client with the same name
@@ -144,7 +142,6 @@ class Agents extends BaseModel
             ];
         }
     }
-
 
     // =======================================================
     public function add_new_client_to_database($post_data)
@@ -183,7 +180,6 @@ class Agents extends BaseModel
     }
 
     // =======================================================
-
     public function get_client_data($id_client)
     {
         // get client data by id
@@ -245,7 +241,6 @@ class Agents extends BaseModel
     }
 
     // =======================================================
-
     public function update_client_data($id, $post_data)
     {
         // updates the agent's client data in the database
@@ -261,20 +256,20 @@ class Agents extends BaseModel
         ];
         $this->db_connect();
         $this->non_query(
-            "UPDATE persons SET " . 
-            "name = AES_ENCRYPT(:name, '" . MYSQL_AES_KEY . "'), " .
-            "gender = :gender, " . 
-            "birthdate = :birthdate, " . 
-            "email = AES_ENCRYPT(:email, '" . MYSQL_AES_KEY . "'), " .
-            "phone = AES_ENCRYPT(:phone, '" . MYSQL_AES_KEY . "'), " .
-            "interests = :interests, " . 
-            "updated_at = NOW() " . 
-            "WHERE id = :id"
-        , $params);
+            "UPDATE persons SET " .
+                "name = AES_ENCRYPT(:name, '" . MYSQL_AES_KEY . "'), " .
+                "gender = :gender, " .
+                "birthdate = :birthdate, " .
+                "email = AES_ENCRYPT(:email, '" . MYSQL_AES_KEY . "'), " .
+                "phone = AES_ENCRYPT(:phone, '" . MYSQL_AES_KEY . "'), " .
+                "interests = :interests, " .
+                "updated_at = NOW() " .
+                "WHERE id = :id",
+            $params
+        );
     }
 
     // =======================================================
-    
     public function delete_client($id_client)
     {
         // deletes the client from the database (hard delete)
@@ -284,5 +279,48 @@ class Agents extends BaseModel
         $this->db_connect();
         $this->non_query("DELETE FROM persons WHERE id = :id", $params);
     }
-}
 
+    // =======================================================
+    public function check_current_password($current_password)
+    {
+        // check if the current_password is equal to the one in the database
+        $params = [
+            ':id_user' => $_SESSION['user']->id
+        ];
+        $this->db_connect();
+        $results = $this->query(
+            "SELECT passwrd " .
+                "FROM agents " .
+                "WHERE id = :id_user",
+            $params
+        );
+
+        if (password_verify($current_password, $results->results[0]->passwrd)) {
+            return [
+                'status' => true
+            ];
+        } else {
+            return [
+                'status' => false
+            ];
+        }
+    }
+
+    // =======================================================
+    public function update_agent_password($new_passwrd)
+    {
+        // updates the current user password
+        $params = [
+            ':passwrd' => password_hash($new_passwrd, PASSWORD_DEFAULT),
+            ':id' => $_SESSION['user']->id
+        ];
+
+        $this->db_connect();
+        $this->non_query(
+            "UPDATE agents SET " . 
+            "passwrd = :passwrd, " . 
+            "updated_at = NOW() " . 
+            "WHERE id = :id"
+        , $params);
+    }
+}

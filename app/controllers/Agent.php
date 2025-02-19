@@ -345,7 +345,7 @@ class Agent extends BaseController
         $model->delete_client($id_client);
 
         // logger
-        logger(get_active_user_name() . ' - Eliminado o cliente id: ' . $id_client);
+        logger(get_current_user() . ' - Eliminado o cliente id: ' . $id_client);
 
         // returns to the agent's main page
         $this->my_clients();
@@ -368,7 +368,7 @@ class Agent extends BaseController
         }
 
         // check if there is a report in session
-        if (!empty($_SESSION['report'])) {
+        if(!empty($_SESSION['report'])){
             $data['report'] = $_SESSION['report'];
             unset($_SESSION['report']);
         }
@@ -435,6 +435,7 @@ class Agent extends BaseController
 
                 // header is fine. Load the file information to the database
                 $results = $this->load_file_data_to_database($file_path);
+                
             } else {
 
                 // logger
@@ -524,14 +525,14 @@ class Agent extends BaseController
         array_shift($data);
 
         // creates a cicle to insert each record
-        foreach ($data as $client) {
+        foreach($data as $client){
 
             // report
             $report['total']++;
 
             // check if the client already exists in the database
             $exists = $model->check_if_client_exists(['text_name' => $client[0]]);
-            if (!$exists['status']) {
+            if(!$exists['status']){
 
                 // add client to database
                 $post_data = [
@@ -547,8 +548,9 @@ class Agent extends BaseController
 
                 // report
                 $report['total_carregados']++;
+                
             } else {
-
+                
                 // client already exists
                 $report['total_nao_carregados']++;
             }
@@ -564,5 +566,46 @@ class Agent extends BaseController
 
         // display the upload form again.
         $this->upload_file_frm();
+    }
+
+    // =======================================================
+    public function export_clients_xlsx()
+    {
+        if (!check_session() || $_SESSION['user']->profile != 'agent') {
+            header('Location: index.php');
+        }
+
+        // get all agent clients
+        $model = new Agents();
+        $results = $model->get_agent_clients($_SESSION['user']->id);
+        
+        // add header to collection
+        $data[] = ['name', 'gender', 'birthdate', 'email', 'phone', 'interests', 'created_at', 'updated_at'];
+
+        // place all clients in the $data collection
+        foreach($results['data'] as $client){
+            
+            // remove the first property (id)
+            unset($client->id);
+
+            // add data as array (original $client is a stdClass object)
+            $data[] = (array)$client;
+        }
+
+        // store the data into the XSLX file
+        $filename = 'output_' . time() . '.xlsx';
+        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $spreadsheet->removeSheetByIndex(0);
+        $worksheet = new \PhpOffice\PhpSpreadsheet\Worksheet\Worksheet($spreadsheet, 'dados');
+        $spreadsheet->addSheet($worksheet);
+        $worksheet->fromArray($data);
+
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment; filename="'. urlencode($filename).'"');
+        $writer->save('php://output');
+
+        // logger
+        logger(get_active_user_name() . " - fez download da lista de clientes para o ficheiro: " . $filename . " | total: " . count($data) - 1 . " registos.");
     }
 }
