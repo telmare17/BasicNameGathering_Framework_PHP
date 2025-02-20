@@ -3,7 +3,7 @@
         'name' => 'telma/bng',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '14a981b5f992b45359dca07040f2d6242d1fdf95',
+        'reference' => 'ac67a3e678dcacb46c90ecf921f0490854f2079b',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -100,6 +100,15 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+        'phpmailer/phpmailer' => array(
+            'pretty_version' => 'v6.9.3',
+            'version' => '6.9.3.0',
+            'reference' => '2f5c94fe7493efc213f643c23b1b1c249d40f47e',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../phpmailer/phpmailer',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'phpoffice/phpspreadsheet' => array(
             'pretty_version' => '4.0.0',
             'version' => '4.0.0.0',
@@ -172,7 +181,7 @@
         'telma/bng' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '14a981b5f992b45359dca07040f2d6242d1fdf95',
+            'reference' => 'ac67a3e678dcacb46c90ecf921f0490854f2079b',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
